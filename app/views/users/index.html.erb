@@ -1,0 +1,41 @@
+<!-- User画面　ユーザーの一覧を表示 -->
+<div class="container">
+	<div class="row">
+		<%= render 'users/prof', user:@user %>
+		<div class="col-xs-9">
+			<h1>Users</h1>
+			<table class="table">
+				<tr>
+					<th>image</th>
+					<th>name</th>
+					<th>follow</th>
+					<th>fpllower</th>
+					<th></th>
+					<th></th>
+				</tr>
+				<% @users.each do |user| %>
+					<tr>
+						<td><%=attachment_image_tag user, :profile_image,style: "width: 50px; height: 50px;",fallback: "no_image.png" %></td>
+						<td><%= user.name %></td>
+						<td>フォロー数<%= user.follower.count%></td>
+						<td>フォロワー数<%= user.followed.count%></td>
+						<td>
+							<% if user != current_user %>
+								<% if current_user.following?(user) %>
+									<%= link_to unfollow_path(user.id),method: :POST do %>
+										<i class="btn btn-primary col-xs-9">フォロー中</i>
+									<% end %>
+								<% else %>
+									<%= link_to follow_path(user.id),method: :POST do %>
+									<i class="btn btn-primary col-xs-9">フォローする</i>
+									<% end %>
+								<% end %>
+							<% end %>
+						</td>
+						<td><%= link_to 'Show',user_path(user.id)%></td>
+					</tr>
+				<% end %>
+			</table>
+		</div>
+	</div>
+</div>

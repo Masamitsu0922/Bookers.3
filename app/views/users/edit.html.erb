@@ -1,0 +1,26 @@
+<!-- ユーザー情報の編集画面 -->
+<div class="container">
+	<% if @user.errors.any? %>
+    <div>
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this product from being saved:</h2>
+
+      <ul>
+        <% @user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+          <% end %>
+      </ul>
+  	</div>
+    <% end %>
+<h1>User info</h1>
+<%= form_for(@user) do |f| %>
+<%= f.label :name %>
+<%= f.text_field :name %>
+<h4>Image</h4>
+<%= f.attachment_field :profile_image %>
+<%= f.label :introduction %>
+<%= f.text_area :introduction %>
+<div>
+<%= f.submit "Update User" %>
+</div>
+<% end %>
+</div>
